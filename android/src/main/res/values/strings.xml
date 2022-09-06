@@ -1,0 +1,18 @@
+<resources>
+
+    <string name="app_name">ScannerAPITest</string>
+    <string name="param">param:</string>
+    <string name="set">Set</string>
+    <string name="id">ID</string>
+    <string name="get">Get</string>
+    <string name="value">Value</string>
+    <string name="startvideo">StartVideo</string>
+    <string name="getlastimage">GetLastImage</string>
+    <string name="set_param_successfully">Set param successfully</string>
+    <string name="errot_settings_failed">Error:Settings failed</string>
+    <string name="error">Error:</string>
+    <string name="barcode">barcode:</string>
+    <string name="type">type:</string>
+    <string name="length">length:</string>
+
+</resources>

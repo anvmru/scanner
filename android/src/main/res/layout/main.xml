@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="326dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="411dp"
+            android:layout_height="327dp"
+            android:scaleType="fitXY"
+            android:visibility="visible" />
+
+        <EditText
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:gravity="top"
+            android:lines="5">
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:layout_width="314dp"
+            android:layout_height="65dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/param"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_setvalue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set" />
+
+            <EditText
+                android:id="@+id/edt_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/id" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_getvalue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/get" />
+
+            <EditText
+                android:id="@+id/edt_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/value" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_startVideo"
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:text="@string/startvideo" />
+
+        <Button
+            android:id="@+id/bt_getLastImage"
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:text="@string/getlastimage" />
+    </LinearLayout>
+
+</LinearLayout>
