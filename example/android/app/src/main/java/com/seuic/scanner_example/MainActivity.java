@@ -1,6 +1,9 @@
 package com.seuic.scanner_example;
 
 import io.flutter.embedding.android.FlutterActivity;
+import io.flutter.embedding.engine.FlutterEngine;
+import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugins.GeneratedPluginRegistrant;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
@@ -10,6 +13,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+//import android.os.Bundle;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,13 +25,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.seuic.scanner.Scanner;
 import com.seuic.scanner.ScannerFactory;
-import com.seuic.scanner_example.R;
-import com.seuic.scanner_example.ScannerService;
 
 public class MainActivity extends FlutterActivity {
     static final String TAG = "ScannerApiTest";
+    private static final String CHANNEL = "com.seuic.scanner/plugin";
     //static final int SCANNER_KEYCODE = 142;
     EditText mEditText;
     Button btn_setvalue;
@@ -46,8 +51,11 @@ public class MainActivity extends FlutterActivity {
     boolean videoFinished = true;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
+        GeneratedPluginRegistrant.registerWith(flutterEngine);
+        new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL)
+                .setMethodCallHandler(
+                    (call, result) -> {
         this.setContentView(R.layout.main);
 
         // Call the service when the program is opened, you can call only once, do not need to call in each activity
@@ -61,6 +69,8 @@ public class MainActivity extends FlutterActivity {
         filter = new IntentFilter(ScannerService.ACTION);
 
         init();
+                }
+        );
     }
 
     void init() {
@@ -118,6 +128,7 @@ public class MainActivity extends FlutterActivity {
 
     class MainOnClickListener implements OnClickListener {
 
+        @SuppressLint("NonConstantResourceId")
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
@@ -134,7 +145,7 @@ public class MainActivity extends FlutterActivity {
                     getLastImage();
                     break;
                 case R.id.image:
-                    if (videoFinished == true) {
+                    if (videoFinished) {
                         image.setVisibility(View.GONE);
                     } else {
                         stopVideo();
@@ -191,7 +202,7 @@ public class MainActivity extends FlutterActivity {
     private void getLastImage() {
         if (Build.VERSION.SDK_INT > 19) {
             if (scanner != null) {
-                byte[] picture = null;
+                byte[] picture;
                 picture = scanner.getLastImage();
                 if (picture != null) {
                     Message picture_msg = mImageHandler.obtainMessage(picture.length, picture);
@@ -249,7 +260,7 @@ public class MainActivity extends FlutterActivity {
                 log("VideoHandler  videoFinished(true)");
             }
         }
-    };
+    }
 
     public class ImageHandler extends Handler {
         public void handleMessage(Message msg) {

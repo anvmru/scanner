@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:scanner/scanner.dart';
+import 'package:scanner/scanner_lifecycle_mixin.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with ScannerLifecycleMixin<MyApp> {
   String _platformVersion = 'Unknown';
 
   @override

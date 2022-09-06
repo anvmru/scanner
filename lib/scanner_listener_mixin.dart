@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'scanner_source.dart';
 
-/// If you want to listen for scavenging events, you need to mixin PdaListenerMixin<T extends StatefulWidget> to State<T extends StatefulWidget>
+/// If you want to listen for scavenging events, you need to mixin ScannerListenerMixin<T extends StatefulWidget> to State<T extends StatefulWidget>
 mixin ScannerListenerMixin<T extends StatefulWidget> on State<T> {
   /// You need to override this callback method to listen for scanned events.
   void onEvent(Object code);

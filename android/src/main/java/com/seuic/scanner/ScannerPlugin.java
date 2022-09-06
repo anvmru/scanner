@@ -3,23 +3,31 @@ package com.seuic.scanner;
 import androidx.annotation.NonNull;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.plugin.common.EventChannel;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
+import io.flutter.plugin.common.PluginRegistry;
 
 import com.seuic.scanner.ScannerFactory;
 import com.seuic.scanner.Scanner;
 import android.app.Activity;
+import android.util.Log;
 
 /** ScannerPlugin */
-public class ScannerPlugin implements FlutterPlugin, MethodCallHandler {
+public class ScannerPlugin implements FlutterPlugin, MethodCallHandler, EventChannel.StreamHandler {
+
+  private static final String CHANNEL = "com.seuic.scanner/plugin";
+  //private static final String CHANNEL = "scanner";
+
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
   /// when the Flutter Engine is detached from the Activity
   private MethodChannel channel;
   private Scanner scanner;
+  private static EventChannel.EventSink eventSink;
 
   public ScannerPlugin() {
     // Все классы плагинов для Android должны поддерживать no-args
@@ -39,7 +47,7 @@ public class ScannerPlugin implements FlutterPlugin, MethodCallHandler {
     // binding.getApplicationContext()
     // А вот доступа к Activity здесь нет!
 
-    channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "scanner");
+    channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), CHANNEL);
     channel.setMethodCallHandler(this);
   }
 
@@ -59,5 +67,21 @@ public class ScannerPlugin implements FlutterPlugin, MethodCallHandler {
     // созданы в onAttachedToFlutterEngine().
 
     channel.setMethodCallHandler(null);
+  }
+
+  public static void registerWith(PluginRegistry.Registrar registrar) {
+    EventChannel channel = new EventChannel(registrar.messenger(), CHANNEL);
+    ScannerPlugin plugin = new ScannerPlugin();
+    channel.setStreamHandler(plugin);
+  }
+
+  @Override
+  public void onListen(Object arguments, EventChannel.EventSink events) {
+    ScannerPlugin.eventSink = eventSink;
+  }
+
+  @Override
+  public void onCancel(Object arguments) {
+    Log.i("ScannerPlugin", "ScannerPlugin:onCancel");
   }
 }

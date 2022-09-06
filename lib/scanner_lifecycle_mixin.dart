@@ -4,23 +4,23 @@ import 'scanner_source.dart';
 /// Auto manage the lifecycle of Scanner plugin(ScannerSource).
 /// Mixin to the state of the root widget.
 mixin ScannerLifecycleMixin<T extends StatefulWidget> on State<T> {
-  void initPdaLifecycle() {
+  void initScannerLifecycle() {
     ScannerSource.init();
   }
 
-  void disposePdaLifecycle() {
+  void disposeScannerLifecycle() {
     ScannerSource.dispose();
   }
 
   @override
   void initState() {
-    initPdaLifecycle();
+    initScannerLifecycle();
     super.initState();
   }
 
   @override
   void dispose() {
-    disposePdaLifecycle();
+    disposeScannerLifecycle();
     super.dispose();
   }
 }

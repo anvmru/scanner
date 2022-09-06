@@ -1,6 +1,6 @@
 # scanner
 
-A new Flutter project.
+This is a scanning plug-in for Seuic Scanner to listen the scanned events and get scanning results.
 
 ## Getting Started
 
