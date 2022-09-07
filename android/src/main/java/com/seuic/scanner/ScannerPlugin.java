@@ -4,29 +4,27 @@ import androidx.annotation.NonNull;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.EventChannel;
-import io.flutter.plugin.common.MethodCall;
-import io.flutter.plugin.common.MethodChannel;
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
-import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.PluginRegistry;
+//import io.flutter.plugin.common.MethodCall;
+//import io.flutter.plugin.common.MethodChannel;
+//import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
+//import io.flutter.plugin.common.MethodChannel.Result;
+//import io.flutter.plugin.common.PluginRegistry;
 
-import com.seuic.scanner.ScannerFactory;
-import com.seuic.scanner.Scanner;
-import android.app.Activity;
+//import com.seuic.scanner.ScannerFactory;
+//import com.seuic.scanner.Scanner;
+//import android.app.Activity;
 import android.util.Log;
 
 /** ScannerPlugin */
-public class ScannerPlugin implements FlutterPlugin, MethodCallHandler, EventChannel.StreamHandler {
+public class ScannerPlugin implements FlutterPlugin, EventChannel.StreamHandler {
 
   private static final String CHANNEL = "com.seuic.scanner/plugin";
-  //private static final String CHANNEL = "scanner";
 
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
   /// when the Flutter Engine is detached from the Activity
-  private MethodChannel channel;
-  private Scanner scanner;
+  private EventChannel channel;
   private static EventChannel.EventSink eventSink;
 
   public ScannerPlugin() {
@@ -46,18 +44,10 @@ public class ScannerPlugin implements FlutterPlugin, MethodCallHandler, EventCha
     // И контекст
     // binding.getApplicationContext()
     // А вот доступа к Activity здесь нет!
+    channel = new EventChannel(flutterPluginBinding.getBinaryMessenger(), CHANNEL);
+    ScannerPlugin plugin = new ScannerPlugin();
+    channel.setStreamHandler(plugin);
 
-    channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), CHANNEL);
-    channel.setMethodCallHandler(this);
-  }
-
-  @Override
-  public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-    if (call.method.equals("getPlatformVersion")) {
-      result.success("Android " + android.os.Build.VERSION.RELEASE);
-    } else {
-      result.notImplemented();
-    }
   }
 
   @Override
@@ -65,19 +55,12 @@ public class ScannerPlugin implements FlutterPlugin, MethodCallHandler, EventCha
     // Ваш плагин отвязан от Flutter.
     // Необходимо очистить все ресурсы и ссылки, которые
     // созданы в onAttachedToFlutterEngine().
-
-    channel.setMethodCallHandler(null);
-  }
-
-  public static void registerWith(PluginRegistry.Registrar registrar) {
-    EventChannel channel = new EventChannel(registrar.messenger(), CHANNEL);
-    ScannerPlugin plugin = new ScannerPlugin();
-    channel.setStreamHandler(plugin);
+    channel.setStreamHandler(null);
   }
 
   @Override
   public void onListen(Object arguments, EventChannel.EventSink events) {
-    ScannerPlugin.eventSink = eventSink;
+    ScannerPlugin.eventSink = events;
   }
 
   @Override

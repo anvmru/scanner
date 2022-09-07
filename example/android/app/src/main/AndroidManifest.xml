@@ -30,8 +30,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-       <service android:name="com.seuic.scanner_example.ScannerService" />
+       <service android:name="com.seuic.scanner.ScannerService" />
        <uses-library android:name="android.scanner.library" />
    </application>
-    <uses-sdk android:minSdkVersion="16"/>
 </manifest>

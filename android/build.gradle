@@ -37,5 +37,5 @@ android {
 }
 
 dependencies {
-    provided files('libsref/ScannerAPI.jar')
+    compileOnly files('libsref/ScannerAPI.jar')
 }
