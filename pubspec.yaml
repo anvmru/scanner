@@ -1,6 +1,6 @@
 name: scanner
 description: This is a scanning plug-in for Seuic Scanner to listen the scanned events and get scanning results.
-version: 0.0.1
+version: 0.0.1+2
 homepage: https://github.com/anvmru/scanner
 
 environment:
